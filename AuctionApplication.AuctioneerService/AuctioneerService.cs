@@ -83,10 +83,11 @@ namespace AuctionApplication.AuctioneerService
                 // TODO: remove/cleanup
                 //Temp state management code for testing
                 Console.WriteLine($"Now bidding on {bid.Item.Name}");
-                AuctionStatus.AuctionState = AuctionStates.Active;
+                AuctionStatus.AuctionState = AuctionStates.Active; //TODO: this class should not manage state
             }
         }
 
+        // TODO: remove this? unused at time of writing
         public void ProcessNomination(Bid<T> bid)
         {
             if(AuctionStatus.AuctionState == AuctionStates.AwaitingNomination)
