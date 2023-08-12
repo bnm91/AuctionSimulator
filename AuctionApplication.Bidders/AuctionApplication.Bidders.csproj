@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="28.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AuctionApplication.AuctioneerClient\AuctionApplication.AuctioneerClients.csproj" />
+    <ProjectReference Include="..\AuctionApplication.Common\AuctionApplication.Common.csproj" />
+  </ItemGroup>
+
+</Project>

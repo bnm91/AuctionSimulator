@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionApplication.Bidders", "..\AuctionApplication.Bidders\AuctionApplication.Bidders.csproj", "{03E53C53-BC2C-458A-AA1F-EA80008F3B52}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionApplication.Common", "..\AuctionApplication.Common\AuctionApplication.Common.csproj", "{A84BE147-BE9F-49D4-AFB1-ECB8594447D8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionApplication", "AuctionApplication.csproj", "{D5CF6DE6-5C93-41DF-9B01-2E5A8F13FCDA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionApplication.AuctioneerService", "..\AuctionApplication.AuctioneerService\AuctionApplication.AuctioneerService.csproj", "{47181814-E2F7-493F-A95E-93E1F831FFAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionApplication.AuctioneerClients", "..\AuctionApplication.AuctioneerClient\AuctionApplication.AuctioneerClients.csproj", "{FD83E02C-8FEA-46D5-9DC7-B719869F88F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03E53C53-BC2C-458A-AA1F-EA80008F3B52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03E53C53-BC2C-458A-AA1F-EA80008F3B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03E53C53-BC2C-458A-AA1F-EA80008F3B52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03E53C53-BC2C-458A-AA1F-EA80008F3B52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A84BE147-BE9F-49D4-AFB1-ECB8594447D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A84BE147-BE9F-49D4-AFB1-ECB8594447D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A84BE147-BE9F-49D4-AFB1-ECB8594447D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A84BE147-BE9F-49D4-AFB1-ECB8594447D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5CF6DE6-5C93-41DF-9B01-2E5A8F13FCDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5CF6DE6-5C93-41DF-9B01-2E5A8F13FCDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5CF6DE6-5C93-41DF-9B01-2E5A8F13FCDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5CF6DE6-5C93-41DF-9B01-2E5A8F13FCDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47181814-E2F7-493F-A95E-93E1F831FFAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47181814-E2F7-493F-A95E-93E1F831FFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47181814-E2F7-493F-A95E-93E1F831FFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47181814-E2F7-493F-A95E-93E1F831FFAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD83E02C-8FEA-46D5-9DC7-B719869F88F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD83E02C-8FEA-46D5-9DC7-B719869F88F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD83E02C-8FEA-46D5-9DC7-B719869F88F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD83E02C-8FEA-46D5-9DC7-B719869F88F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {305FA456-D8FF-41A7-B489-ED78B45BCAD0}
+	EndGlobalSection
+EndGlobal
