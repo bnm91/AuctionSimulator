@@ -30,25 +30,64 @@ namespace AuctionApplication.AuctioneerService
 
             while (true)
             {
+                //TODO: improve "end of auction" logic
                 if(_auctioneerService.GetAvailable().Count <= 0)
                 {
                     break;
                 }
 ;
-                while(!_auctioneerService.GetIncomingBids().IsCompleted)
+                while(true)
                 {
-                    Bid<T> bid = null;
-                    try
+                    //Bid<T> bid = null;
+                    AuctionStates state = _auctioneerService.AuctionStatus.AuctionState;
+                    if(_auctioneerService.GetIncomingBids().TryTake(out Bid<T> nextBid))
                     {
-                        bid = _auctioneerService.GetIncomingBids().Take();
+                        if(nextBid != null)
+                        {
+                            _auctioneerService.ConsumeBid(nextBid);
+                        }
                     }
-                    catch(InvalidOperationException)
-                    { }
+                    else
+                    { 
+                        //manage state
+                        if(state == AuctionStates.Active)
+                        {
+                            _auctioneerService.AuctionStatus.AuctionState = AuctionStates.GoingOnce;
+                            Console.WriteLine("Going once...");
+                            Thread.Sleep(1000);
+                        }
+                        else if(state == AuctionStates.GoingOnce)
+                        {
+                            _auctioneerService.AuctionStatus.AuctionState = AuctionStates.GoingTwice;
+                            Console.WriteLine("Going twice...");
+                            Thread.Sleep(1000);
+                        }
+                        else if(state == AuctionStates.GoingTwice)
+                        {
+                            _auctioneerService.AuctionStatus.AuctionState = AuctionStates.AwaitingNomination;
+                            Console.WriteLine("SOLD!");
+                        }
+                        else if(state == AuctionStates.AwaitingNomination)
+                        {
+                            //do nothing
+                        }
+                        else
+                        {
+                            Console.WriteLine("how did we get here?");
+                        }
+                    }
 
-                    if(bid != null)
-                    {
-                        _auctioneerService.ConsumeBid(bid);
-                    }
+                    //try
+                    //{
+                    //    bid = _auctioneerService.GetIncomingBids().Take();
+                    //}
+                    //catch(InvalidOperationException)
+                    //{ }
+
+                    //if(bid != null)
+                    //{
+                    //    _auctioneerService.ConsumeBid(bid);
+                    //}
 
                     //var status = _auctioneerService.GetStatus();
                     //if (status.AuctionState == AuctionStates.Active)
