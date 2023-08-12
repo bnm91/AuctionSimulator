@@ -10,14 +10,6 @@ namespace AuctionApplication.AuctioneerService
 {
     public class Auctioneer<T> where T : IItem
     {
-        // when active and bids are changing        => active
-        // when active and bids not changing        => going once
-        // when going once and bids changing        => active
-        // when going once and bids not changing    => going twice
-        // when going twice and bids changing       => active
-        // when going twice and bids not changing   => sold=>awaiting nom
-        // when awaiting nom receive nomination     => active
-
         private readonly AuctioneerService<T> _auctioneerService;
 
         public Auctioneer(AuctioneerService<T> auctioneerService)
@@ -27,8 +19,6 @@ namespace AuctionApplication.AuctioneerService
 
         public void Run()
         {
-            _auctioneerService.AuctionStatus.AuctionState = AuctionStates.AwaitingNomination;
-
             while (true)
             {
                 //TODO: improve "end of auction" logic
@@ -50,7 +40,15 @@ namespace AuctionApplication.AuctioneerService
                     }
                     else
                     {
-                        _auctioneerService.AuctionStateContext.BidMissed();
+                        if (_auctioneerService.GetAvailable().Count > 0)
+                        {
+                            _auctioneerService.AuctionStateContext.BidMissed();
+                        }
+                        else
+                        {
+                            _auctioneerService.AuctionStateContext.EndAuction();
+                            Console.ReadLine();
+                        }
                     }
                 }
 

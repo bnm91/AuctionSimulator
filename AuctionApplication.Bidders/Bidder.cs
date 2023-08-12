@@ -50,8 +50,10 @@ namespace AuctionApplication.Bidders
                     case AuctionStates.AwaitingNomination:
                     case AuctionStates.Nomination:
                         var availableNominees = await _auctioneerClient.GetAvailable();
-                        var nominee = _nominationStrategy.SelectNominee(availableNominees);
-                        await _auctioneerClient.Nominate(Id, nominee);
+                        if (_nominationStrategy.TrySelectNominee(availableNominees, out T nominee))
+                        {
+                            await _auctioneerClient.Nominate(Id, nominee);
+                        }
                         break;
                     case AuctionStates.Closed:
                     default:

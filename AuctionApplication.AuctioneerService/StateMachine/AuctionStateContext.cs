@@ -24,6 +24,11 @@ namespace AuctionApplication.AuctioneerService.StateMachine
             _currentState.BidMissed(this);
         }
 
+        public void EndAuction()
+        {
+            _currentState.EndAuction(this);
+        }
+
         public void SetState(IState state)
         {
             _currentState = state;

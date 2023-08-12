@@ -9,13 +9,13 @@ namespace AuctionApplication.AuctioneerService.StateMachine.States
     {
         public GoingTwiceState()
         {
-            Console.WriteLine("Going twice...");
+            Console.WriteLine("Going twice..."); //TODO: this is for console implementation but must be removed once other implementations exist
             Thread.Sleep(1000);
         }
 
         public void BidMissed(AuctionStateContext ctx)
         {
-            Console.WriteLine("SOLD!");
+            Console.WriteLine("SOLD!"); //TODO: this is for console implementation but must be removed once other implementations exist
             ctx.SetState(new AwaitingNominationState());
         }
 

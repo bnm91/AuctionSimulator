@@ -11,5 +11,17 @@ namespace AuctionApplication.Bidders.NominationStrategies
         {
             return available[0]; //TODO: this can get an out of bounds exception 
         }
+
+        public bool TrySelectNominee(List<T> available, out T nominee)
+        {
+            if(available.Count > 0)
+            {
+                nominee = available[0];
+                return true;
+            }
+
+            nominee = default;
+            return false;
+        }
     }
 }

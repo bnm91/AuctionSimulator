@@ -8,5 +8,6 @@ namespace AuctionApplication.Bidders.NominationStrategies
     public interface INominationStrategy<T> where T : IItem
     {
         public T SelectNominee(List<T> available);
+        public bool TrySelectNominee(List<T> available, out T nominee);
     }
 }
