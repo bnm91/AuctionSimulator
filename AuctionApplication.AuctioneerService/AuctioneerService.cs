@@ -3,6 +3,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AuctionApplication.AuctioneerService.StateMachine;
+using AuctionApplication.AuctioneerService.StateMachine.States;
 using AuctionApplication.Common.Models;
 using AuctionApplication.Common.Models.Items;
 
@@ -19,15 +21,17 @@ namespace AuctionApplication.AuctioneerService
 
         private BlockingCollection<Bid<T>> _incomingBids;
         private readonly List<T> _availableItems;
+        public AuctionStateContext AuctionStateContext;
 
         public AuctioneerService(List<T> availableItems) 
         {
             _availableItems = availableItems;
+            AuctionStateContext = new AuctionStateContext();
             AuctionStatus = new AuctionStatus<T>()
             {
                 //WinnerId = null,
                 WinningBid = null,
-                AuctionState = AuctionStates.AwaitingNomination
+                AuctionState = GetAuctionStateDto()
             };
             _incomingBids = new BlockingCollection<Bid<T>>();
             _lock = new object();
@@ -35,6 +39,7 @@ namespace AuctionApplication.AuctioneerService
 
         public AuctionStatus<T> GetStatus()
         {
+            AuctionStatus.AuctionState = GetAuctionStateDto();
             return AuctionStatus;
         }
 
@@ -50,11 +55,11 @@ namespace AuctionApplication.AuctioneerService
 
         public void PlaceBid(Bid<T> bid)
         {
-            if (AuctionStatus.AuctionState == AuctionStates.Active) // TODO: is there anyway to get state management out of here entirely?
+            if (AuctionStateContext.GetState() is ActiveState) // TODO: is there anyway to get state management out of here entirely?
             {
                 _incomingBids.Add(bid);
             }
-            if (AuctionStatus.AuctionState == AuctionStates.AwaitingNomination)
+            if (AuctionStateContext.GetState() is AwaitingNominationState)
             {
                 _incomingBids.Add(bid);
             }
@@ -63,7 +68,7 @@ namespace AuctionApplication.AuctioneerService
         public void ConsumeBid(Bid<T> bid)
         {
             //Console.WriteLine("bid consumed");
-            if (AuctionStatus.AuctionState == AuctionStates.Active)
+            if (AuctionStateContext.GetState() is ActiveState)
             {
                 var currentBid = AuctionStatus.WinningBid;
                 if(currentBid.Amount < bid.Amount)
@@ -75,7 +80,7 @@ namespace AuctionApplication.AuctioneerService
                     Console.WriteLine($"Winning Bid on {bid.Item.Name} now {bid.Amount} by {bid.BidderId}");
                 }
             }
-            else if (AuctionStatus.AuctionState == AuctionStates.AwaitingNomination)
+            else if (AuctionStateContext.GetState() is AwaitingNominationState)
             {
                 _availableItems.Remove(bid.Item);
                 SetCurrentWinningBid(new Tuple<Guid, Bid<T>>(bid.BidderId, bid));
@@ -83,7 +88,6 @@ namespace AuctionApplication.AuctioneerService
                 // TODO: remove/cleanup
                 //Temp state management code for testing
                 Console.WriteLine($"Now bidding on {bid.Item.Name}");
-                AuctionStatus.AuctionState = AuctionStates.Active; //TODO: this class should not manage state
             }
         }
 
@@ -126,6 +130,35 @@ namespace AuctionApplication.AuctioneerService
                 Item = newWinningBid.Item2.Item,
             };
             //_mutex.ReleaseMutex();
+        }
+
+        private AuctionStates GetAuctionStateDto()
+        {
+            var state = AuctionStateContext.GetState();
+            if(state is ActiveState)
+            {
+                return AuctionStates.Active;
+            }
+            else if(state is AwaitingNominationState)
+            {
+                return AuctionStates.AwaitingNomination;
+            }
+            else if (state is GoingOnceState)
+            {
+                return AuctionStates.GoingOnce;
+            }
+            else if (state is GoingTwiceState)
+            {
+                return AuctionStates.GoingTwice;
+            }
+            else if (state is ClosedState)
+            {
+                return AuctionStates.Closed;
+            }
+            else
+            {
+                throw new Exception("Invalid State reached");
+            }
         }
     }
 }

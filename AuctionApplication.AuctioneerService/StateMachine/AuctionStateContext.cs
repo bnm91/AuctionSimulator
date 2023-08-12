@@ -28,5 +28,10 @@ namespace AuctionApplication.AuctioneerService.StateMachine
         {
             _currentState = state;
         }
+
+        public IState GetState()
+        {
+            return _currentState;
+        }
     }
 }
