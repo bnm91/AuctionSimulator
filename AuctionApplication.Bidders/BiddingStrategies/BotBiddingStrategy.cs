@@ -19,10 +19,10 @@ namespace AuctionApplication.Bidders.BiddingStrategies
             _collectionBuildingStrategy = collectionBuildingStrategy;
         }
 
-        public bool WillRaiseBid(T item, decimal currentBid)
+        public bool WillRaiseBid(T item, decimal currentBid, IEnumerable<T> collection = null)
         {
             return _reservationPriceCalculator.GetReservationPrice(item) > currentBid
-                && _collectionBuildingStrategy.WillBid(item, currentBid, 200);
+                && _collectionBuildingStrategy.WillBid(item, currentBid, 200, collection);
         }
     }
 }

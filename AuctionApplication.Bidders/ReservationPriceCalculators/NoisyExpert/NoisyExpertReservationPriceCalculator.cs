@@ -7,8 +7,9 @@ namespace AuctionApplication.Bidders.ReservationPriceCalculators
 {
     public class NoisyExpertReservationPriceCalculator : IReservationPriceCalculator
     {
-        private IExpertReservationPriceProvider _expertReservationPriceProivder;
-        private INoiseGenerator _noiseGenerator;
+        private readonly IExpertReservationPriceProvider _expertReservationPriceProivder;
+        private readonly INoiseGenerator _noiseGenerator;
+        private readonly Dictionary<string, decimal> _cache;
 
         public NoisyExpertReservationPriceCalculator(
             IExpertReservationPriceProvider expertReservationPriceProvider,
@@ -17,14 +18,22 @@ namespace AuctionApplication.Bidders.ReservationPriceCalculators
         {
             _expertReservationPriceProivder = expertReservationPriceProvider;
             _noiseGenerator = noiseGenerator;
+            _cache = new Dictionary<string, decimal>();
         }
 
         public decimal GetReservationPrice(IItem item)
         {
-            var expertPrice = GetExpertReservationPrice(item);
-            var noise = GetNoiseFactor();
+            decimal reservationPrice;
+            if (!_cache.TryGetValue(item.Name, out reservationPrice))
+            {
+                var expertPrice = GetExpertReservationPrice(item);
+                var noise = GetNoiseFactor();
+                reservationPrice = expertPrice + noise;
 
-            return expertPrice + noise;
+                _cache.Add(item.Name, reservationPrice);
+                return reservationPrice;
+            }
+            return reservationPrice;
         }
 
         private decimal GetExpertReservationPrice(IItem item)

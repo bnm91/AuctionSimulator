@@ -7,6 +7,6 @@ namespace AuctionApplication.Bidders.BiddingStrategies
 {
     public interface IBiddingStrategy<T> where T : IItem
     {
-        public bool WillRaiseBid(T item, decimal currentBid);
+        public bool WillRaiseBid(T item, decimal currentBid, IEnumerable<T> collection = null);
     }
 }

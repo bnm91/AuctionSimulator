@@ -5,20 +5,18 @@ using AuctionApplication.Common.Models.Items;
 
 namespace AuctionApplication.Bidders.ReservationPriceCalculators
 {
-    public class RandomReservationPriceCalculator : IReservationPriceCalculator
+    public class RandomFixedReservationPriceCalculator : IReservationPriceCalculator
     {
         public int MaxPrice { get; set; } = int.MaxValue;
-        private int _fixedReservationPrice { get; set; }
 
-        public RandomReservationPriceCalculator(int maxPrice)
+        public RandomFixedReservationPriceCalculator(int maxPrice)
         {
             MaxPrice = maxPrice;
-            _fixedReservationPrice = new Random().Next(0, MaxPrice);
         }
 
         public decimal GetReservationPrice(IItem item)
         {
-            return _fixedReservationPrice;
+            return new Random().Next(0, MaxPrice);
         }
     }
 }

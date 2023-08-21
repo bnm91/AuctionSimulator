@@ -9,7 +9,7 @@ namespace AuctionApplication.Bidders.NominationStrategies
     {
         public T SelectNominee(List<T> available)
         {
-            return available[0]; //TODO: this can get an out of bounds exception 
+            return available[0];
         }
 
         public bool TrySelectNominee(List<T> available, out T nominee)

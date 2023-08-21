@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionApplication", "Aucti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionApplication.AuctioneerService", "..\AuctionApplication.AuctioneerService\AuctionApplication.AuctioneerService.csproj", "{47181814-E2F7-493F-A95E-93E1F831FFAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionApplication.AuctioneerClients", "..\AuctionApplication.AuctioneerClient\AuctionApplication.AuctioneerClients.csproj", "{FD83E02C-8FEA-46D5-9DC7-B719869F88F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionApplication.AuctioneerClients", "..\AuctionApplication.AuctioneerClient\AuctionApplication.AuctioneerClients.csproj", "{FD83E02C-8FEA-46D5-9DC7-B719869F88F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionApplication.AvailableItems", "..\AuctionApplication.AvailableItems\AuctionApplication.AvailableItems.csproj", "{B356AD92-2B85-4473-AC87-00E817D7B9AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGeneration", "..\DataGeneration\DataGeneration.csproj", "{B60CF312-5713-45A7-AA45-FAF5E9E12507}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{FD83E02C-8FEA-46D5-9DC7-B719869F88F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD83E02C-8FEA-46D5-9DC7-B719869F88F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD83E02C-8FEA-46D5-9DC7-B719869F88F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B356AD92-2B85-4473-AC87-00E817D7B9AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B356AD92-2B85-4473-AC87-00E817D7B9AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B356AD92-2B85-4473-AC87-00E817D7B9AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B356AD92-2B85-4473-AC87-00E817D7B9AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B60CF312-5713-45A7-AA45-FAF5E9E12507}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B60CF312-5713-45A7-AA45-FAF5E9E12507}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B60CF312-5713-45A7-AA45-FAF5E9E12507}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B60CF312-5713-45A7-AA45-FAF5E9E12507}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

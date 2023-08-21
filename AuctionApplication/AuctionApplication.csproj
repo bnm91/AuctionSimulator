@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuctionApplication.AuctioneerService\AuctionApplication.AuctioneerService.csproj" />
+    <ProjectReference Include="..\AuctionApplication.AvailableItems\AuctionApplication.AvailableItems.csproj" />
     <ProjectReference Include="..\AuctionApplication.Bidders\AuctionApplication.Bidders.csproj" />
   </ItemGroup>
 

@@ -29,7 +29,6 @@ namespace AuctionApplication.AuctioneerService
 ;
                 while(true)
                 {
-                    //AuctionStates state = _auctioneerService.AuctionStatus.AuctionState; //TODO: do we need captured state?
                     if(_auctioneerService.GetIncomingBids().TryTake(out Bid<T> nextBid))
                     {
                         if(nextBid != null)

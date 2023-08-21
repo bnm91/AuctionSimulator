@@ -10,7 +10,7 @@ namespace AuctionApplication.AuctioneerService.StateMachine.States
         public GoingTwiceState()
         {
             Console.WriteLine("Going twice..."); //TODO: this is for console implementation but must be removed once other implementations exist
-            Thread.Sleep(1000);
+            Thread.Sleep(2500);
         }
 
         public void BidMissed(AuctionStateContext ctx)

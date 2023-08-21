@@ -12,6 +12,7 @@ namespace AuctionApplication.Bidders
     public class Bidder<T> where T : IItem
     {
         public Guid Id { get; set; }
+        public IEnumerable<T> _collection;
         private readonly IBiddingStrategy<T> _biddingStrategy;
         private readonly INominationStrategy<T> _nominationStrategy;
         private readonly IAuctioneerClient<T> _auctioneerClient;
@@ -22,6 +23,7 @@ namespace AuctionApplication.Bidders
             )
         {
             Id = Guid.NewGuid();
+            _collection = new List<T>();
             _biddingStrategy = biddingStrategy;
             _nominationStrategy = nominationStrategy;
             _auctioneerClient = auctioneerClient;
@@ -38,9 +40,9 @@ namespace AuctionApplication.Bidders
                 {
                     case AuctionStates.Active:
                         if (status.WinningBid.Amount <= 0 ||
-                            _biddingStrategy.WillRaiseBid(status.WinningBid.Item, status.WinningBid.Amount))
+                            _biddingStrategy.WillRaiseBid(status.WinningBid.Item, status.WinningBid.Amount, _collection))
                         {
-                            if (status.WinningBid.BidderId != Id)
+                            if (status.WinningBid.BidderId != Id)  //TODO: self raising is still happening -- fix this
                             {
                                 var bid = new Bid<T>() { Item = status.WinningBid.Item, Amount = status.WinningBid.Amount + 1 };
                                 await _auctioneerClient.RaiseBid(Id, bid);

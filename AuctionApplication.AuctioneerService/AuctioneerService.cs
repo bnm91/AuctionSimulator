@@ -12,14 +12,9 @@ namespace AuctionApplication.AuctioneerService
 {
     public class AuctioneerService<T> where T : IItem
     {
-        private object _lock;
-
-        //NMB TODO: this thing has to be thread safe
-        //NMB TOOD: this can't be the only way to determine what's currently up for auction unless the Auctioneer state machine is air tight and threadsafe 
-        //      currently we have a race to nominate where they both succeed
         public AuctionStatus<T> AuctionStatus;
 
-        private BlockingCollection<Bid<T>> _incomingBids;
+        private readonly BlockingCollection<Bid<T>> _incomingBids;
         private readonly List<T> _availableItems;
         public AuctionStateContext AuctionStateContext;
 
@@ -29,12 +24,10 @@ namespace AuctionApplication.AuctioneerService
             AuctionStateContext = new AuctionStateContext();
             AuctionStatus = new AuctionStatus<T>()
             {
-                //WinnerId = null,
                 WinningBid = null,
                 AuctionState = GetAuctionStateDto()
             };
             _incomingBids = new BlockingCollection<Bid<T>>();
-            _lock = new object();
         }
 
         public AuctionStatus<T> GetStatus()
@@ -86,50 +79,18 @@ namespace AuctionApplication.AuctioneerService
                 SetCurrentWinningBid(new Tuple<Guid, Bid<T>>(bid.BidderId, bid));
 
                 // TODO: remove/cleanup
-                //Temp state management code for testing
                 Console.WriteLine($"Now bidding on {bid.Item.Name}");
             }
         }
 
-        // TODO: remove this? unused at time of writing
-        public void ProcessNomination(Bid<T> bid)
-        {
-            if(AuctionStatus.AuctionState == AuctionStates.AwaitingNomination)
-            {
-                lock (_lock)
-                {
-                    if (AuctionStatus.WinningBid != null && !AuctionStatus.WinningBid.Equals(bid))
-                    {
-                        //remove from available
-                        _availableItems.Remove(bid.Item);
-
-                        //set as current
-                        //_currentItem = bid.Item;
-                        SetCurrentWinningBid(new Tuple<Guid, Bid<T>>(bid.BidderId, bid)); // TODO: clean up this object -- bidderId is not part of bid
-                    }
-                    else if (AuctionStatus.WinningBid == null && bid != null)
-                    {
-                        //remove from available
-                        _availableItems.Remove(bid.Item);
-
-                        //set as current
-                        SetCurrentWinningBid(new Tuple<Guid, Bid<T>>(bid.BidderId, bid));
-                    }
-                }
-            }
-
-        }
-
         private void SetCurrentWinningBid(Tuple<Guid, Bid<T>> newWinningBid)
         {
-            //_mutex.WaitOne();
             AuctionStatus.WinningBid = new Bid<T>()
             {
                 BidderId = newWinningBid.Item1,
                 Amount = newWinningBid.Item2.Amount,
                 Item = newWinningBid.Item2.Item,
             };
-            //_mutex.ReleaseMutex();
         }
 
         private AuctionStates GetAuctionStateDto()

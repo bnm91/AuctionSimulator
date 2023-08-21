@@ -10,7 +10,7 @@ namespace AuctionApplication.AuctioneerService.StateMachine.States
         public GoingOnceState()
         {
             Console.WriteLine("Going Once..."); //TODO: this is for console implementation but must be removed once other implementations exist
-            Thread.Sleep(1000); //TODO not sure if waiting should be a side effect of state machine
+            Thread.Sleep(2500); //TODO not sure if waiting should be a side effect of state machine
         }
 
         public void BidMissed(AuctionStateContext ctx)
