@@ -31,7 +31,7 @@ namespace AuctionApplication.Bidders
 
         public async void Run()
         {
-            AuctionStates state = AuctionStates.AwaitingNomination;
+            AuctionStates state = AuctionStates.AwaitingNomination; // TODO: clean this up?
             while(state != AuctionStates.Closed)
             {
                 var status = await _auctioneerClient.GetStatus();

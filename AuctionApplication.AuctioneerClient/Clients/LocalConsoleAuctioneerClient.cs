@@ -24,7 +24,6 @@ namespace AuctionApplication.AuctioneerClients.Clients
 
         public async Task<AuctionStatus<T>> GetStatus()
         {
-            //new ValueTask<AuctionStatus<T>>(_auctioneerService.GetStatus());
             return _auctioneerService.GetStatus();
         }
 
