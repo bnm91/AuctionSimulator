@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AuctionApplication.AuctioneerClients.Clients;
 using AuctionApplication.AuctioneerService;
+using AuctionApplication.AuctioneerService.Collections;
 using AuctionApplication.AvailableItems.Providers.FantasyFootball;
 using AuctionApplication.Bidders;
 using AuctionApplication.Bidders.BiddingStrategies;
@@ -26,8 +27,9 @@ namespace AuctionApplication
             //TEST CODE
             //TODO: Abstract Factory Pattern needed here
             List<Player> availableItems = new FantasyFootballAvailablePlayersProvider().GetAvailableItems().ToList();
+            ICollectionsRepository<Player> collectionRepo = new CollectionsRepository<Player>();
 
-            AuctioneerService<Player> auctioneerService = new AuctioneerService<Player>(availableItems);
+            AuctioneerService<Player> auctioneerService = new AuctioneerService<Player>(availableItems, collectionRepo);
             LocalConsoleAuctioneerClient<Player> auctioneerClient = new LocalConsoleAuctioneerClient<Player>(auctioneerService);
 
             var botCollectionBuildingStrategy = new StartersFirstStrategy(); 

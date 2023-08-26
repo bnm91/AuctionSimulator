@@ -29,7 +29,7 @@ namespace AuctionApplication.Bidders.CollectionBuildingStrategies.FantasyFootbal
                     Count = group.Count()
                 }).ToDictionary(x => x.Position, x => x.Count);
 
-                if(HasAnyStartingLineupOpenings(currentPositionCounts)
+                if (HasAnyStartingLineupOpenings(currentPositionCounts)
                     && HasStartingLineupOpeningForPosition(currentPositionCounts, item))
                 {
                      return true;
@@ -43,12 +43,24 @@ namespace AuctionApplication.Bidders.CollectionBuildingStrategies.FantasyFootbal
 
         private bool HasAnyStartingLineupOpenings(Dictionary<string, int> currentPositionCounts)
         {
-            return currentPositionCounts.Any(x => x.Value < _starterCounts[x.Key]);
+            int GetCurrentCount(string position)
+            {
+                if(currentPositionCounts.TryGetValue(position, out int count))
+                {
+                    return count;
+                }
+                return 0;
+            };
+
+            return _starterCounts.Any(x => x.Value > GetCurrentCount(x.Key));
         }
 
         private bool HasStartingLineupOpeningForPosition(Dictionary<string, int> currentPositionCounts, Player player)
         {
-            return _starterCounts[player.Position] <= currentPositionCounts[player.Position];
+            if (!currentPositionCounts.ContainsKey(player.Position))
+                return true;
+            
+            return _starterCounts[player.Position] > currentPositionCounts[player.Position];
         }
     }
 }
