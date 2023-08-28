@@ -12,5 +12,6 @@ namespace AuctionApplication.AuctioneerClient
         Task<List<T>> GetAvailable();
         Task RaiseBid(Guid bidderId, Bid<T> bid);
         Task Nominate(Guid bidderId, T nominee);
+        Task<List<T>> GetCollection(Guid bidderId);
     }
 }

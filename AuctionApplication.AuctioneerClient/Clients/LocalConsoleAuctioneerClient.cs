@@ -22,9 +22,13 @@ namespace AuctionApplication.AuctioneerClients.Clients
             return  _auctioneerService.GetAvailable();
         }
 
+        public async Task<List<T>> GetCollection(Guid bidderId)
+        {
+            return _auctioneerService.GetCollection(bidderId);
+        }
+
         public async Task<AuctionStatus<T>> GetStatus()
         {
-            //new ValueTask<AuctionStatus<T>>(_auctioneerService.GetStatus());
             return _auctioneerService.GetStatus();
         }
 

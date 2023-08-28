@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AuctionApplication.AuctioneerService.Collections;
 using AuctionApplication.AuctioneerService.StateMachine;
 using AuctionApplication.AuctioneerService.StateMachine.States;
 using AuctionApplication.Common.Models;
@@ -16,11 +17,14 @@ namespace AuctionApplication.AuctioneerService
 
         private readonly BlockingCollection<Bid<T>> _incomingBids;
         private readonly List<T> _availableItems;
+        private readonly ICollectionsRepository<T> _collectionsRepository;
         public AuctionStateContext AuctionStateContext;
 
-        public AuctioneerService(List<T> availableItems) 
+        public AuctioneerService(List<T> availableItems,
+            ICollectionsRepository<T> collectionsRepository) 
         {
             _availableItems = availableItems;
+            _collectionsRepository = collectionsRepository;
             AuctionStateContext = new AuctionStateContext();
             AuctionStatus = new AuctionStatus<T>()
             {
@@ -75,12 +79,21 @@ namespace AuctionApplication.AuctioneerService
             }
             else if (AuctionStateContext.GetState() is AwaitingNominationState)
             {
+                //last winning bid was a sale
+                if(AuctionStatus.WinningBid != null)
+                    _collectionsRepository.Add(AuctionStatus.WinningBid.BidderId, AuctionStatus.WinningBid.Item);
+
                 _availableItems.Remove(bid.Item);
                 SetCurrentWinningBid(new Tuple<Guid, Bid<T>>(bid.BidderId, bid));
 
                 // TODO: remove/cleanup
                 Console.WriteLine($"Now bidding on {bid.Item.Name}");
             }
+        }
+
+        public List<T> GetCollection(Guid bidderId)
+        {
+            return _collectionsRepository.Read(bidderId);
         }
 
         private void SetCurrentWinningBid(Tuple<Guid, Bid<T>> newWinningBid)
