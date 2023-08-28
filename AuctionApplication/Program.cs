@@ -32,18 +32,19 @@ namespace AuctionApplication
             AuctioneerService<Player> auctioneerService = new AuctioneerService<Player>(availableItems, collectionRepo);
             LocalConsoleAuctioneerClient<Player> auctioneerClient = new LocalConsoleAuctioneerClient<Player>(auctioneerService);
 
-            var botCollectionBuildingStrategy = new StartersFirstStrategy(); 
+            //var botCollectionBuildingStrategy = new StartersFirstStrategy(); 
+            //var botCollectionBuildingStrategy = new LegalGreed();
             var botReservationPriceProvider = new FProsExpertReservationPriceProvider(14, 200, "half", "23", "08", "13");
             var botNominationStrategy = new DefaultNominationStrategy<Player>();
             var botBiddingStrategy = new BotBiddingStrategy<Player>(
-                new NoisyExpertReservationPriceCalculator(botReservationPriceProvider, new UniformNoiseGenerator()), 
-                botCollectionBuildingStrategy);
+                new NoisyExpertReservationPriceCalculator(botReservationPriceProvider, new UniformNoiseGenerator()),
+                new LegalGreed());
             var bot2BiddingStrategy = new BotBiddingStrategy<Player>(
-                new NoisyExpertReservationPriceCalculator(botReservationPriceProvider, new UniformNoiseGenerator()), 
-                botCollectionBuildingStrategy);
+                new NoisyExpertReservationPriceCalculator(botReservationPriceProvider, new UniformNoiseGenerator()),
+                new LegalGreed());
             var bot3BiddingStrategy = new BotBiddingStrategy<Player>(
-                new NoisyExpertReservationPriceCalculator(botReservationPriceProvider, new UniformNoiseGenerator()), 
-                botCollectionBuildingStrategy);
+                new NoisyExpertReservationPriceCalculator(botReservationPriceProvider, new UniformNoiseGenerator()),
+                new LegalGreed());
             List<Bidder<Player>> bidders = new List<Bidder<Player>>()
             {
                 new Bidder<Player>(botBiddingStrategy, botNominationStrategy, auctioneerClient),

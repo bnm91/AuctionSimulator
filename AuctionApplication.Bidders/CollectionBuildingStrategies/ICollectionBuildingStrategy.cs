@@ -7,6 +7,6 @@ namespace AuctionApplication.Bidders.CollectionBuildingStrategies
 {
     public interface ICollectionBuildingStrategy<T> where T: IItem
     {
-        public bool WillBid(T item, decimal bid, decimal budget, IEnumerable<T> collection = null);
+        public bool WillBid(T item, decimal bid, decimal budget, List<T> collection = null);
     }
 }

@@ -16,10 +16,12 @@ namespace AuctionApplication.Bidders.CollectionBuildingStrategies.FantasyFootbal
             { "TE", 1 },
             { "D/ST", 1 },
             { "K", 1 }
+
+            //TODO: implement bench
         };
         
 
-        public bool WillBid(Player item, decimal bid, decimal budget, IEnumerable<Player> collection = null)
+        public bool WillBid(Player item, decimal bid, decimal budget, List<Player> collection = null)
         {
             if (collection != null)
             {
